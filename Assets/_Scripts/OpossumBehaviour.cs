@@ -47,16 +47,6 @@ public class OpossumBehaviour : MonoBehaviour
         if (wallHit)
         {
             _FlipX();
-            //if (!wallHit.collider.CompareTag("Ramps"))
-            //{
-            //    _FlipX();
-            //    rampDirection = RampDirection.DOWN;
-
-            //}
-            //else
-            //{
-            //    rampDirection = RampDirection.UP;
-            //}
         }
         Debug.DrawLine(transform.position, LookInFrontPoint.position, Color.red);
     }
@@ -101,6 +91,7 @@ public class OpossumBehaviour : MonoBehaviour
 
                 Debug.Log(angle);
                 Debug.Log("Ramps!!");
+
                 onRamp = true;
             }
             else if (verticalHit.collider.CompareTag("Platforms"))
@@ -108,45 +99,14 @@ public class OpossumBehaviour : MonoBehaviour
                 Debug.Log("Platforms!!");
                 onRamp = false;
             }
-
-            ////old check that would be jittery
-            //if (groundHit.collider.CompareTag("Ramps"))
-            //{
-            //    Vector3 testAngle = (transform.position - LookAheadPoint.position);
-            //    Vector2 testAngle2D = new Vector2(testAngle.x, testAngle.y);
-            //    float angle = Vector2.SignedAngle(testAngle2D, groundHit.normal);
-            //    if(angle > 0) //going up
-            //    {
-            //        rampDirection = RampDirection.UP;
-            //    }
-            //    else //going down
-            //    {
-            //        rampDirection = RampDirection.DOWN;
-            //    }
-            //    Debug.Log(angle);
-            //    Debug.Log("Ramps!!");
-            //    onRamp = true;
-            //}
-            //else if (groundHit.collider.CompareTag("Platforms"))
-            //{
-            //    Debug.Log("Platforms!!");
-            //    onRamp = false;
-            //}
             isGroundAhead = true;
         }
         else
         {
             isGroundAhead = false;
         }
-
-       
-
         //debug line for the look ahead point
         Debug.DrawLine(transform.position, LookAheadPoint.position, Color.green);
-        
-        
-
-
     }
 
     private void _Move()
@@ -158,7 +118,7 @@ public class OpossumBehaviour : MonoBehaviour
             {
                 if(rampDirection == RampDirection.UP)
                 {
-                    rigidbody2D.AddForce(Vector2.up * runForce * 0.5f * Time.deltaTime);
+                    rigidbody2D.AddForce(Vector2.up * runForce * 0.5f * Time.deltaTime);//only apply the vertical force when we are goin up
                     transform.rotation = Quaternion.Euler(0.0f, 0.0f, 26.0f * direction.x);
                 }
                 else // ramp direction is down
